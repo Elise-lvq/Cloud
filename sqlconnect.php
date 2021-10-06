@@ -11,7 +11,7 @@ try {
   session_start();
 
   
-  $_SESSION["edition"] = true;
+  $_SESSION["edition"] = "true";
 } catch(PDOException $e) {
   //echo "Connection failed: " . $e->getMessage();
 }
