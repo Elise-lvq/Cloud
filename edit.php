@@ -16,7 +16,7 @@ function edit($conn){
       $conn->query($sql);
       $_SESSION["edition"] = "false";
 
-      //header('Location: fusion.php');
+      header('Location: fusion.php');
     }else{
       //si =true -> afficher nom ville et pays dans les inpus type text
       echo"deuxième boucle";

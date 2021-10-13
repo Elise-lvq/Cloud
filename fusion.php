@@ -28,9 +28,10 @@ require 'sqlconnect.php';
 
   //Met à jour lesdonnés dans la base
   if(isset($_POST["edition"])){
-    $_SESSION['nom'] = (int)($_POST['nom']);
-    $_SESSION['pays'] = (int)($_POST['pays']);
+    $_SESSION['nom'] = $_POST['nom'];
+    $_SESSION['pays'] = $_POST['pays'];
     echo "je passe dans edition";
+    echo "nom : ".$_SESSION['nom']." pays : ".$_SESSION['pays'];
     include("edit.php");
     $_SESSION["edition"] = "true";
     edit($conn);
@@ -57,14 +58,16 @@ require 'sqlconnect.php';
   
    <p>Nom ville : <input type='text' name='nom' value= <?php 
    
-   if (isset($_SESSION['nom'])) {
+   if (isset($_SESSION['nom']) && $_SESSION['nom']!="") {
      echo $_SESSION['nom'];
+     unset($_SESSION['nom']);
    } 
 
    
    ?>  ></p>
-    <p>Pays : <input type='text' name='pays' value=<?php if (isset($_SESSION['pays'])) {
+    <p>Pays : <input type='text' name='pays' value=<?php if (isset($_SESSION['pays']) && $_SESSION['pays']!="") {
       echo $_SESSION['pays'];
+      unset($_SESSION['pays']);
     }  ?> ></p>
     <p><input name="<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>" class='ok' type='submit' value=<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>></p>
 
