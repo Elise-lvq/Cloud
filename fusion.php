@@ -29,6 +29,7 @@ require 'sqlconnect.php';
     $_SESSION["edition"] = "true";
     edit($conn);
   }
+  
   //Supprime la ligne
   if (isset($_POST["delete"])) {
     include("delete.php");
