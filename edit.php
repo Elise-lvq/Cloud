@@ -2,7 +2,7 @@
 function edit($conn){
   try {
     //si =false -> update
-    if ($_SESSION["edition"] == "false") {
+    if ($_SESSION["edition"] == "true") {
       /*echo $_SESSION['nom'];
       echo $_SESSION['pays'];
       echo $_SESSION['index'];*/
@@ -11,12 +11,15 @@ function edit($conn){
       $pays = $_SESSION['pays'];
       $sql = "UPDATE ville SET Nom ='$nom',Pays='$pays' WHERE Id='$int' ;";
       echo $sql;
-      /*$conn->query($sql);
-      $_SESSION["edition"] = "true";*/
+      session_unset();
+      echo "première boucle";
+      $conn->query($sql);
+      $_SESSION["edition"] = "false";
 
-      header('Location: fusion.php');
+      //header('Location: fusion.php');
     }else{
       //si =true -> afficher nom ville et pays dans les inpus type text
+      echo"deuxième boucle";
       echo $_SESSION["edition"];
       echo "***";
       echo $_SESSION['index'];
@@ -26,9 +29,11 @@ function edit($conn){
         $_SESSION["nom"] = $row["Nom"];
         $_SESSION["pays"] = $row["Pays"];
       }
-      $_SESSION["edition"] = "false";
+      $_SESSION["edition"] = "true";
       echo $_SESSION["edition"];
+      
       //header('Location: fusion.php');
+      
     }
     
   } catch (PDOException $e) {
@@ -36,6 +41,4 @@ function edit($conn){
   }
 
 }
-require 'sqlconnect.php';
-edit($conn);
 ?>

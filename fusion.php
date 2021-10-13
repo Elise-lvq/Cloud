@@ -9,23 +9,34 @@ require 'sqlconnect.php';
       include("insert.php");
       insert($conn);*/
       echo "add";
+
+
   }
 
   if (isset($_POST["edit"])) {
     //affiche le pays et la ville à éditier
-    include("edit.php");
-    $_SESSION["edition"] = "true";
+    $_SESSION["edition"] = "false";
     $_SESSION['index'] = (int)($_POST['edit']);
+    //Execute le code de la page edit
+    include("edit.php");
+    echo "la valeur de l'index";
+    
+    echo $_SESSION["index"];
+    echo "<br>";
     edit($conn);
   }
 
   //Met à jour lesdonnés dans la base
   if(isset($_POST["edition"])){
+    $_SESSION['nom'] = (int)($_POST['nom']);
+    $_SESSION['pays'] = (int)($_POST['pays']);
+    echo "je passe dans edition";
     include("edit.php");
-    $_SESSION["edition"] = "false";
+    $_SESSION["edition"] = "true";
+    edit($conn);
     //edit($conn);
     //echo "edit";
-    header("Location: edit.php");
+    //header("Location: edit.php");
   }
   
   if (isset($_POST["delete"])) {
@@ -55,7 +66,7 @@ require 'sqlconnect.php';
     <p>Pays : <input type='text' name='pays' value=<?php if (isset($_SESSION['pays'])) {
       echo $_SESSION['pays'];
     }  ?> ></p>
-    <p><input name="<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "false") { echo "edition"; } else { echo "save"; } ?>" class='ok' type='submit' value="<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "false") { echo "edition"; } else { echo "save"; } ?>"></p>
+    <p><input name="<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>" class='ok' type='submit' value=<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>></p>
 
 </form>
 </fieldset>

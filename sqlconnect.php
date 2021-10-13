@@ -10,7 +10,7 @@ try {
   //echo "Connected successfully";
 
   
-  $_SESSION["edition"] = "true";
+  $_SESSION["edition"] = "false";
 
 } catch(PDOException $e) {
   //echo "Connection failed: " . $e->getMessage();
