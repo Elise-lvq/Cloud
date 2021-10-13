@@ -2,44 +2,34 @@
 session_start();
 require 'sqlconnect.php';
 
-  //Regarde lavaleur de post
-
+  //regarde valeur de $POST
   if(isset($_POST["save"])){
-    /*echo "insert";
+      //ajoute une ligne à la table
+      //bouton = save
       include("insert.php");
-      insert($conn);*/
-      echo "add";
-
-
+      insert($conn);
   }
 
   if (isset($_POST["edit"])) {
     //affiche le pays et la ville à éditier
+    //bouton = edition
+    include("edit.php");
     $_SESSION["edition"] = "false";
     $_SESSION['index'] = (int)($_POST['edit']);
-    //Execute le code de la page edit
-    include("edit.php");
-    echo "la valeur de l'index";
-    
-    echo $_SESSION["index"];
-    echo "<br>";
     edit($conn);
   }
 
-  //Met à jour lesdonnés dans la base
+  //Met à jour les donnés dans la base
   if(isset($_POST["edition"])){
+    include("edit.php");
     $_SESSION['nom'] = $_POST['nom'];
     $_SESSION['pays'] = $_POST['pays'];
     echo "je passe dans edition";
     echo "nom : ".$_SESSION['nom']." pays : ".$_SESSION['pays'];
-    include("edit.php");
     $_SESSION["edition"] = "true";
     edit($conn);
-    //edit($conn);
-    //echo "edit";
-    //header("Location: edit.php");
   }
-  
+  //Supprime la ligne
   if (isset($_POST["delete"])) {
     include("delete.php");
     delete($conn);
@@ -54,9 +44,11 @@ require 'sqlconnect.php';
   </head>
 </html>
 <fieldset>
+<!-- formulaire insertion/édition -->
 <form action="#" method="post">
   
    <p>Nom ville : <input type='text' name='nom' value= <?php 
+   //remplie les case si le bouton édit a été appuyer
    
    if (isset($_SESSION['nom']) && $_SESSION['nom']!="") {
      echo $_SESSION['nom'];
@@ -69,6 +61,7 @@ require 'sqlconnect.php';
       echo $_SESSION['pays'];
       unset($_SESSION['pays']);
     }  ?> ></p>
+    <!-- le bouton submit change de texte selon le mode édition/insertion -->
     <p><input name="<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>" class='ok' type='submit' value=<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>></p>
 
 </form>
@@ -84,6 +77,7 @@ try {
     $stmt->execute();
 
     
+    //permet d'afficher toute les données de la table
     echo "<table >";
     echo "<tr><th>Nom</th><th>Pays</th><th>Actions</th></tr>";
     
@@ -110,13 +104,12 @@ try {
       echo "</td>";
       echo "<td style='width:222px;'>";
       echo "<form action='#' method='post'>";
+      //chaque ligne possède un bouton edit (-> fait changer le formulaire de mode) et delete
       echo "<button type='submit' value=$getId name='edit' class='addButton' >EDIT</button>";
       echo "&nbsp";
       echo "<button type='submit' value=$getId  name='delete'  class='deleteButton'>DELETE</button>";
       echo "</form>";
       echo "</td>";
-      
-      
   echo " </tr>" . "\n";
 
   }
@@ -124,7 +117,6 @@ try {
   } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
   }
-  $conn = null;
   echo "</table>";
 ?>
 
