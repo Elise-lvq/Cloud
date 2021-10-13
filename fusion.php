@@ -42,7 +42,7 @@ require 'sqlconnect.php';
 </html>
 <fieldset>
 <!-- formulaire insertion/édition -->
-<form action="#" method="post">
+<form action="#" method="post" enctype="multipart/form-data">
   
    <p>Nom ville : <input type='text' name='nom' value= <?php 
    //remplie les case si le bouton édit a été appuyer
@@ -58,6 +58,11 @@ require 'sqlconnect.php';
       echo $_SESSION['pays'];
       unset($_SESSION['pays']);
     }  ?> ></p>
+
+    <p>
+      Image : <input type="file" name="image">
+    </p>
+
     <!-- le bouton submit change de texte selon le mode édition/insertion -->
     <p><input name="<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>" class='ok' type='submit' value=<?php if (isset($_SESSION["edition"]) && $_SESSION["edition"] == "true") { echo "edition"; } else { echo "save"; } ?>></p>
 
