@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require 'sqlconnect.php';
 
   //Regarde lavaleur de post
