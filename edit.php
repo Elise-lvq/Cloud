@@ -4,8 +4,8 @@ function edit($conn){
     //si edition = false -> update
     if ($_SESSION["edition"] == "true") {
       $int = $_SESSION['index'];
-      $nom = $_SESSION['nom'];
-      $pays = $_SESSION['pays'];
+      $nom = filter_var($_SESSION['nom'], FILTER_SANITIZE_STRING);
+      $pays =  filter_var($_SESSION['pays'], FILTER_SANITIZE_STRING);
       $sql = "UPDATE ville SET Nom ='$nom',Pays='$pays' WHERE Id='$int' ;";
       //efface les donnéesdes variables de session puisque la requete est écrite est terminé
       session_unset();

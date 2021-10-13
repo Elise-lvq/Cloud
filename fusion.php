@@ -14,7 +14,6 @@ require 'sqlconnect.php';
     //affiche le pays et la ville à éditier
     //bouton = edition
     include("edit.php");
-    $_SESSION["edition"] = "false";
     $_SESSION['index'] = (int)($_POST['edit']);
     edit($conn);
   }
@@ -24,12 +23,9 @@ require 'sqlconnect.php';
     include("edit.php");
     $_SESSION['nom'] = $_POST['nom'];
     $_SESSION['pays'] = $_POST['pays'];
-    echo "je passe dans edition";
-    echo "nom : ".$_SESSION['nom']." pays : ".$_SESSION['pays'];
-    $_SESSION["edition"] = "true";
     edit($conn);
   }
-  
+
   //Supprime la ligne
   if (isset($_POST["delete"])) {
     include("delete.php");
@@ -72,11 +68,9 @@ require 'sqlconnect.php';
     
 try {
     $count = 0;
-
     $sql = 'SELECT * FROM ville';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-
     
     //permet d'afficher toute les données de la table
     echo "<table >";
